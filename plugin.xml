@@ -18,4 +18,12 @@
         </config-file>
         <source-file src="src/android/InAppUpdateManager.java" target-dir="src/InAppUpdateManager" />
     </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppUpdateManager">
+                <param name="ios-package" value="InAppUpdateManager" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/InAppUpdateManager.swift" />
+    </platform>
 </plugin>
