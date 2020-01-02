@@ -1,22 +1,25 @@
 {
-    "name": "cordova-in-app-update-android",
-    "version": "0.0.1",
-    "description": "A cordova plugin to support in-app updates in Android.",
+    "name": "cordova-plugin-inappupdatemanager",
+    "version": "1.0.0",
+    "description": "A cordova plugin to support in-app updates in Android and IOS.",
     "cordova": {
-      "id": "cordova-in-app-update-android",
+      "id": "cordova-plugin-inappupdatemanager",
       "platforms": []
     },
     "repository": {
       "type": "git",
-      "url": "git+https://github.com/iamparthaonline/cordova-in-app-update-android.git"
+      "url": "git+https://github.com/phiamo/cordova-plugin-inappupdatemanager.git"
     },
     "keywords": [
       "ecosystem:cordova"
     ],
-    "author": "Partha Roy",
+    "contributors": [
+      "Partha Roy"
+    ],
+    "author": "Philipp A. Mohrenweiser",
     "license": "ISC",
     "bugs": {
-      "url": "https://github.com/iamparthaonline/cordova-in-app-update-android/issues"
+      "url": "https://github.com/phiamo/cordova-plugin-inappupdatemanager/issues"
     },
-    "homepage": "https://github.com/iamparthaonline/cordova-in-app-update-android#readme"
+    "homepage": "https://github.com/phiamo/cordova-plugin-inappupdatemanager#readme"
   }
