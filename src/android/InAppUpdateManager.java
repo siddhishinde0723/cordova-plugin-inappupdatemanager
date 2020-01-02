@@ -34,7 +34,7 @@ public class InAppUpdateManager extends CordovaPlugin {
         return false;
     }
 
-    public static final int REQUEST_CODE = 781;
+    public static final int REQUEST_CODE = 108108;
 
     private void startUpdateCheck(Context context) {
         // Creates instance of the manager.
