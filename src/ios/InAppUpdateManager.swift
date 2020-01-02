@@ -40,12 +40,15 @@ class AppInfo: Decodable {
                         print("error getting app store version: ", error)
                     } else if appStoreAppVersion == currentVersion {
                         print("Already on the last app version: ",currentVersion)
-                    } else {
-                        print("Needs update: AppStore Version: \(appStoreAppVersion) > Current version: ",currentVersion)
+                    } else if appStoreAppVersion.compare(currentVersion, options: .numeric) == .orderedDescending {
+                        print("Needs update: AppStore Version: \(appStoreAppVersion) > Current version: ", currentVersion)
                         DispatchQueue.main.async {
                             let topController: UIViewController = UIApplication.shared.keyWindow!.rootViewController!
                             topController.showAppUpdateAlert(Version: (info?.version)!, Force: force, AppURL: (info?.trackViewUrl)!)
                         }
+                    }
+                    else {
+                        print("Lower Version Online: \(appStoreAppVersion) ... probabaly we currently develop a new one?", currentVersion)
                     }
                 }
             }
