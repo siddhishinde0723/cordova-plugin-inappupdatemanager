@@ -85,7 +85,6 @@ public class InAppUpdateManager extends CordovaPlugin {
             .getAppUpdateInfo()
             .addOnSuccessListener(
                 appUpdateInfo -> {
-                    ...
                     if (appUpdateInfo.updateAvailability()
                         == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                         // If an in-app update is already running, resume the update.
