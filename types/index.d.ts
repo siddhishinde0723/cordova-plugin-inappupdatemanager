@@ -21,6 +21,6 @@ declare module InAppUpdateManager {
          * App version from config.xml's version (e.g. <widget id="my.app.id" version="1.5.0">)
          * @example window.cordova.plugins.version.getAppVersion() // e.g: "1.5.0"
          */
-        immediate(): boolean;
+        checkForImmediateUpdate(): boolean;
     }
 }
