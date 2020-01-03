@@ -22,5 +22,5 @@
       "url": "https://github.com/phiamo/cordova-plugin-inappupdatemanager/issues"
     },
     "homepage": "https://github.com/phiamo/cordova-plugin-inappupdatemanager#readme",
-    "types": "./types/index.d.ts",
+    "types": "./types/index.d.ts"
   }
