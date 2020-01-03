@@ -21,5 +21,6 @@
     "bugs": {
       "url": "https://github.com/phiamo/cordova-plugin-inappupdatemanager/issues"
     },
-    "homepage": "https://github.com/phiamo/cordova-plugin-inappupdatemanager#readme"
+    "homepage": "https://github.com/phiamo/cordova-plugin-inappupdatemanager#readme",
+    "types": "./types/index.d.ts",
   }
