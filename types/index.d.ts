@@ -7,7 +7,7 @@
 
 interface CordovaPlugins {
     /**
-     * cordova_app_version_plugin interface
+     * cordova-plugin-inappupdatemanager interface
      */
     InAppUpdateManager: InAppUpdateManager.InAppUpdateManager;
 }
@@ -18,9 +18,8 @@ interface CordovaPlugins {
 declare module InAppUpdateManager {
     interface InAppUpdateManager {
         /**
-         * App version from config.xml's version (e.g. <widget id="my.app.id" version="1.5.0">)
-         * @example window.cordova.plugins.version.getAppVersion() // e.g: "1.5.0"
+         * @example cordova.plugins.InAppUpdateManager.checkForImmediateUpdate()
          */
-        checkForImmediateUpdate(): boolean;
+        checkForImmediateUpdate(success: Function, error: Function): void;
     }
 }
