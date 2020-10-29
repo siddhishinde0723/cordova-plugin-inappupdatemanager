@@ -21,5 +21,7 @@ declare module InAppUpdateManager {
          * @example cordova.plugins.InAppUpdateManager.checkForImmediateUpdate()
          */
         checkForImmediateUpdate(success: Function, error: Function): void;
+
+        isUpdateAvailable(success: Function, error: Function): void;
     }
 }

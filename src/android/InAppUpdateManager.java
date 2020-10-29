@@ -1,14 +1,8 @@
 package InAppUpdateManager;
 
 import android.content.Context;
-
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CallbackContext;
-
-import org.json.JSONArray;
-
-
 import android.content.IntentSender;
+
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -16,25 +10,46 @@ import com.google.android.play.core.install.model.AppUpdateType;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.Task;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.json.JSONArray;
+
 /**
  * This class echoes a string called from JavaScript.
  */
 public class InAppUpdateManager extends CordovaPlugin {
 
+    public static final int REQUEST_CODE = 108108;
     protected AppUpdateManager appUpdateManager;
+
     @Override
-    public boolean execute (String action, JSONArray args,
-                            CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray args,
+                           CallbackContext callbackContext) {
         if (action.equals("immediate")) {
 
-            Context context    = cordova.getActivity().getApplicationContext();
+            Context context = cordova.getActivity().getApplicationContext();
             this.startUpdateCheck(context);
+            return true;
+        }
+
+        if (action.equals("isUpdateAvailable")) {
+            Context context = cordova.getActivity().getApplicationContext();
+            this.isUpdateAvailable(context, callbackContext);
             return true;
         }
         return false;
     }
 
-    public static final int REQUEST_CODE = 108108;
+    private void isUpdateAvailable(Context context, CallbackContext callbackContext) {
+        appUpdateManager = AppUpdateManagerFactory.create(context);
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                callbackContext.success("true");
+            }
+        });
+    }
 
     private void startUpdateCheck(Context context) {
         // Creates instance of the manager.
@@ -46,20 +61,20 @@ public class InAppUpdateManager extends CordovaPlugin {
         // Checks that the platform will allow the specified type of update.
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                // For a flexible update, use AppUpdateType.FLEXIBLE
-                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                    // Request the update.
+                    // For a flexible update, use AppUpdateType.FLEXIBLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                // Request the update.
 
                 try {
                     appUpdateManager.startUpdateFlowForResult(
-                    // Pass the intent that is returned by 'getAppUpdateInfo()'.
-                    appUpdateInfo,
-                    // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
-                    AppUpdateType.IMMEDIATE,
-                    // The current activity making the update request.
-                    cordova.getActivity(),
-                    // Include a request code to later monitor this update request.
-                    REQUEST_CODE);
+                            // Pass the intent that is returned by 'getAppUpdateInfo()'.
+                            appUpdateInfo,
+                            // Or 'AppUpdateType.FLEXIBLE' for flexible updates.
+                            AppUpdateType.IMMEDIATE,
+                            // The current activity making the update request.
+                            cordova.getActivity(),
+                            // Include a request code to later monitor this update request.
+                            REQUEST_CODE);
                 } catch (IntentSender.SendIntentException e) {
                     e.printStackTrace();
                 }
@@ -74,22 +89,22 @@ public class InAppUpdateManager extends CordovaPlugin {
         super.onResume(multitaskin);
 
         appUpdateManager
-            .getAppUpdateInfo()
-            .addOnSuccessListener(
-                appUpdateInfo -> {
-                    if (appUpdateInfo.updateAvailability()
-                        == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                        // If an in-app update is already running, resume the update.
-                        try {
-                            appUpdateManager.startUpdateFlowForResult(
-                                appUpdateInfo,
-                                AppUpdateType.IMMEDIATE,
-                                cordova.getActivity(),
-                                REQUEST_CODE);
-                        } catch (IntentSender.SendIntentException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                .getAppUpdateInfo()
+                .addOnSuccessListener(
+                        appUpdateInfo -> {
+                            if (appUpdateInfo.updateAvailability()
+                                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                                // If an in-app update is already running, resume the update.
+                                try {
+                                    appUpdateManager.startUpdateFlowForResult(
+                                            appUpdateInfo,
+                                            AppUpdateType.IMMEDIATE,
+                                            cordova.getActivity(),
+                                            REQUEST_CODE);
+                                } catch (IntentSender.SendIntentException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
     }
 }
