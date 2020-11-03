@@ -46,7 +46,8 @@ public class InAppUpdateManager extends CordovaPlugin {
 
         appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                callbackContext.success("true");
+                int availableCodes = appUpdateInfo.availableVersionCode();
+                callbackContext.success(availableCodes);
             }
         });
     }
